@@ -1,14 +1,8 @@
 import React, { useEffect } from "react";
-import {
-  Table,
-  Thead,
-  Tbody,
-  Tfoot,
-  Tr,
-  Th,
-  Td,
-  TableCaption,
-} from "@chakra-ui/core";
+import Card from "components/Card";
+import {Heading} from "@chakra-ui/core";
+import CardContent from "components/Card/CardContent";
+import CardHeader from "components/Card/CardHeader";
 import { useHistory, useParams } from "react-router-dom";
 import { useFile } from "hooks/useFiles";
 
@@ -18,12 +12,23 @@ const Details = () => {
   const { isFetchingDocument, document, getDocumentById } = useFile();
 
   useEffect(() => {
-    if (id) {
+    if (id && document === null) {
       getDocumentById(id);
     }
-  }, [id]);
+  }, [document]);
 
-  return <h1>{!isFetchingDocument && document}</h1>;
+  return (
+    <>
+      <Card mt="2rem" w="sm" mx="sm">
+        <CardHeader>
+          <Heading size="md">File Details</Heading>
+        </CardHeader>
+        <CardContent>
+          {isFetchingDocument && <> </> }
+        </CardContent>
+      </Card>
+    </>
+  );
 };
 
 export default Details;

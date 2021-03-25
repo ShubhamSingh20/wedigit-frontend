@@ -11,6 +11,7 @@ import authServices from "services/authServices";
 import { useHistory, useLocation, useRouteMatch } from "react-router-dom";
 import { useAlerts } from "./useAlerts";
 import Axios from "axios";
+import api from "services/api";
 
 const file = createContext(null);
 const { Provider } = file;
@@ -41,9 +42,9 @@ export const FileProvider = ({ children }) => {
       deleteDocument,
       getDocumentById: function(id) {
         setIsFetchingDocument(true);
-        Axios.get(`api/v1/documents/${id}/`)
-        .then((res) => {
-          setDocument(res.data);
+        api().get(`/documents/${id}`)
+        .then((data) => {
+          setDocument(data);
           setIsFetchingDocument(false);
         })
         .catch((e = {response : { } }) => {

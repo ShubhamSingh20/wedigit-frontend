@@ -25,14 +25,7 @@ function App() {
             <PrivateRoute path="/d">
               <Suspense fallback={<FullscreenLoader open />}>
                 <Route path="/d" exact component={Dashboard} />
-                <Route
-                  path="/d/file"
-                  render={() => (
-                    <>
-                      <Route path="/:id" component={Detail} />
-                    </>
-                  )}
-                />
+                <Route path="/d/file/:id"component={Detail}/>
               </Suspense>
             </PrivateRoute>
           </Switch>
