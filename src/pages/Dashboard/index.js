@@ -105,7 +105,7 @@ const Dashboard = () => {
                           <PopoverHeader>Confirmation!</PopoverHeader>
                           <PopoverBody>
                             Are you sure you want to delete{" "}
-                            <Code>{row.board_name}</Code>?
+                            <Code>{row.file_name}</Code>?
                           </PopoverBody>
                           <PopoverFooter d="flex" flexDir="row-reverse">
                             <Button
