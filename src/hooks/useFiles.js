@@ -22,19 +22,37 @@ export const FileProvider = ({ children }) => {
   const location = useLocation();
   const { successAlert, errorAlert } = useAlerts();
 
+  const [document, setDocument] = useState(null);
   const [documents, setDocuments] = useState([]);
   const [deleteDocument, setDeleteDocument] = useState(false);
   const [newDocument, setNewDocument] = useState(false);
+  const [isFetchingDocument, setIsFetchingDocument] = useState(false);
   const [isFetchingDocuments, setIsFetchingDocuments] = useState(false);
 
   const value = useMemo(
     () => ({
+      document,
       documents,
       newDocument,
+      isFetchingDocument,
       isFetchingDocuments,
       setNewDocument,
       setDeleteDocument,
       deleteDocument,
+      getDocumentById: function(id) {
+        setIsFetchingDocument(true);
+        Axios.get(`api/v1/documents/${id}/`)
+        .then((res) => {
+          setDocument(res.data);
+          setIsFetchingDocument(false);
+        })
+        .catch((e = {response : { } }) => {
+          let description =
+          e.response?.data?.message || e.response?.data?.error;
+          errorAlert({ description, title: "Error while fetching document!" });
+          setIsFetchingDocument(false);
+        })
+      },
       getDocuments: function() {
         setIsFetchingDocuments(true);
         Axios.get('api/v1/documents/')
@@ -45,7 +63,7 @@ export const FileProvider = ({ children }) => {
         .catch((e = {response : { } }) => {
           let description =
           e.response?.data?.message || e.response?.data?.error;
-          errorAlert({ description, title: "Error while fetching documents up!" });
+          errorAlert({ description, title: "Error while fetching documents up" });
           setIsFetchingDocuments(false);
         })
       },
@@ -61,6 +79,7 @@ export const FileProvider = ({ children }) => {
     }),
     [
       documents,
+      document,
       isFetchingDocuments,
       setNewDocument,
       errorAlert,

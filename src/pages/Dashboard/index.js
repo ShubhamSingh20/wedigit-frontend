@@ -21,10 +21,12 @@ import CardContent from "components/Card/CardContent";
 import CardHeader from "components/Card/CardHeader";
 import DropZone from "components/Dropzone";
 import { useFile } from "hooks/useFiles";
+import { useHistory } from "react-router-dom";
 import { FaPen, FaTrash } from "react-icons/fa";
 
 const Dashboard = () => {
   const { errorAlert } = useAlerts();
+  const history = useHistory();
   const {
     getDocuments,
     documents,
@@ -83,7 +85,7 @@ const Dashboard = () => {
                         leftIcon={FaPen}
                         variantColor="teal"
                         variant="outline"
-                        onClick={() => {}}
+                        onClick={() => history.push(`/d/file/${row.id}`)}
                       >
                         Edit
                       </Button>

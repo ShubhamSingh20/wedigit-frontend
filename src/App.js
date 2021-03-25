@@ -1,6 +1,7 @@
 import React, { lazy, Suspense } from "react";
 /* eslint-disable no-unused-vars */
 import Signup from "./pages/Signup";
+import Detail from "./pages/Detail";
 import { Route, Switch } from "react-router-dom";
 import { AuthProvider, useAuth } from "./hooks/useAuth.js";
 import { FileProvider } from "./hooks/useFiles";
@@ -24,6 +25,14 @@ function App() {
             <PrivateRoute path="/d">
               <Suspense fallback={<FullscreenLoader open />}>
                 <Route path="/d" exact component={Dashboard} />
+                <Route
+                  path="/d/file"
+                  render={() => (
+                    <>
+                      <Route path="/:id" component={Detail} />
+                    </>
+                  )}
+                />
               </Suspense>
             </PrivateRoute>
           </Switch>
